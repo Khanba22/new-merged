@@ -3,57 +3,93 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { BookOpen, Award, Star, CheckCircle, Clock, TrendingUp, Zap, Bookmark, FileText, Lightbulb } from "lucide-react"
+import {
+  BookOpen,
+  Award,
+  Star,
+  CheckCircle,
+  Clock,
+  TrendingUp,
+  Zap,
+  Bookmark,
+  FileText,
+  Lightbulb,
+} from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import useTopic from "@/contexts/topic-context"
 import useAuth from "@/contexts/auth-context"
 
-const units = [
-  {
-    id: 1,
-    title: "Tax Fundamentals",
-    sections: [
-      { id: 1, title: "What are Taxes?", completed: true },
-      { id: 2, title: "Types of Taxes", completed: true },
-      { id: 3, title: "Tax Authorities", completed: false },
-    ],
-    progress: 66,
-    icon: BookOpen,
-  },
-  {
-    id: 2,
-    title: "Income Tax Basics",
-    sections: [
-      { id: 1, title: "Taxable Income", completed: false },
-      { id: 2, title: "Tax Brackets", completed: false },
-      { id: 3, title: "Filing Status", completed: false },
-    ],
-    progress: 0,
-    icon: FileText,
-  },
-  {
-    id: 3,
-    title: "Deductions & Credits",
-    sections: [
-      { id: 1, title: "Standard Deduction", completed: false },
-      { id: 2, title: "Itemized Deductions", completed: false },
-      { id: 3, title: "Common Tax Credits", completed: false },
-    ],
-    progress: 0,
-    icon: TrendingUp,
-  },
-]
+const dummy = {
+  points: 1200,
+  streak: 5,
+  overallProgress: 22,
+  tip: "Tip: Take notes as you learn!",
+  units: [
+    {
+      id: 1,
+      title: "Tax Fundamentals",
+      sections: [
+        { id: 1, title: "What are Taxes?", completed: true },
+        { id: 2, title: "Types of Taxes", completed: true },
+        { id: 3, title: "Tax Authorities", completed: false },
+      ],
+      progress: 66,
+      icon: BookOpen,
+      content: {
+        paragraphs: [
+          "Tax authorities are government bodies responsible for administering and enforcing tax laws. In the United States, the primary federal tax authority is the Internal Revenue Service (IRS), which collects income taxes, payroll taxes, and other federal taxes.",
+          "State tax authorities, such as the Franchise Tax Board in California or the Department of Revenue in many states, handle state-level taxes. Local governments may also have their own tax authorities for property taxes and other local levies.",
+        ],
+        insight: {
+          title: "Key Insight",
+          message:
+            "Understanding which tax authority governs different types of taxes is crucial for proper compliance and knowing where to direct questions or concerns about your tax obligations.",
+        },
+      },
+    },
+    {
+      id: 2,
+      title: "Income Tax Basics",
+      sections: [
+        { id: 1, title: "Taxable Income", completed: false },
+        { id: 2, title: "Tax Brackets", completed: false },
+        { id: 3, title: "Filing Status", completed: false },
+      ],
+      progress: 0,
+      icon: FileText,
+    },
+    {
+      id: 3,
+      title: "Deductions & Credits",
+      sections: [
+        { id: 1, title: "Standard Deduction", completed: false },
+        { id: 2, title: "Itemized Deductions", completed: false },
+        { id: 3, title: "Common Tax Credits", completed: false },
+      ],
+      progress: 0,
+      icon: TrendingUp,
+    },
+  ],
+  achievements: [
+    { icon: Star, count: "3/5", color: "text-yellow-400" },
+    { icon: CheckCircle, count: "1/3", color: "text-green-400" },
+    { icon: Bookmark, count: "2/7", color: "text-blue-400" },
+  ],
+  relatedTopics: [
+    "Tax Compliance Requirements",
+    "IRS Structure and Functions",
+    "State vs. Federal Tax Jurisdiction",
+  ],
+}
 
 export function LearningPage() {
-
   const topic = useTopic()
   const user = useAuth()
-  console.log(topic,"Topic")
-
   const router = useRouter()
-  const [activeUnit, setActiveUnit] = useState(units[0])
+
+  const [activeUnit, setActiveUnit] = useState(dummy.units[0])
   const [activeSection, setActiveSection] = useState(activeUnit.sections[2])
 
   const handleChallengeClick = () => {
@@ -75,21 +111,20 @@ export function LearningPage() {
           <div className="ml-auto flex items-center space-x-4">
             <div className="flex items-center bg-purple-800/50 rounded-full px-3 py-1">
               <Zap className="h-4 w-4 text-yellow-400 mr-1" />
-              <span className="text-white font-bold">{user?.points}</span>
+              <span className="text-white font-bold">{dummy.points}</span>
             </div>
             <div className="flex items-center bg-purple-800/50 rounded-full px-3 py-1">
               <Clock className="h-4 w-4 text-blue-400 mr-1" />
-              <span className="text-white font-bold">{user?.streak} Day Streak</span>
+              <span className="text-white font-bold">{dummy.streak} Day Streak</span>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Sidebar with units */}
           <div className="md:col-span-1 space-y-4">
             <h2 className="text-xl font-bold text-white mb-4">Learning Path</h2>
 
-            {units.map((unit) => (
+            {dummy.units.map((unit) => (
               <motion.div
                 key={unit.id}
                 whileHover={{ scale: 1.02 }}
@@ -98,7 +133,10 @@ export function LearningPage() {
                     ? "bg-purple-700/70 shadow-lg shadow-purple-900/50"
                     : "bg-purple-800/30 hover:bg-purple-800/50"
                 }`}
-                onClick={() => setActiveUnit(unit)}
+                onClick={() => {
+                  setActiveUnit(unit)
+                  setActiveSection(unit.sections[0])
+                }}
               >
                 <div className="flex items-center mb-2">
                   <div
@@ -106,8 +144,8 @@ export function LearningPage() {
                       unit.progress === 100
                         ? "bg-green-500/20"
                         : unit.progress > 0
-                          ? "bg-blue-500/20"
-                          : "bg-purple-500/20"
+                        ? "bg-blue-500/20"
+                        : "bg-purple-500/20"
                     }`}
                   >
                     <unit.icon
@@ -115,16 +153,14 @@ export function LearningPage() {
                         unit.progress === 100
                           ? "text-green-400"
                           : unit.progress > 0
-                            ? "text-blue-400"
-                            : "text-purple-400"
+                          ? "text-blue-400"
+                          : "text-purple-400"
                       }`}
                     />
                   </div>
                   <span className="ml-2 text-white font-medium">{unit.title}</span>
                 </div>
-
                 <Progress value={unit.progress} className="h-1.5 bg-purple-950" />
-
                 <div className="mt-2 text-xs text-purple-300">{unit.progress}% Complete</div>
               </motion.div>
             ))}
@@ -135,29 +171,18 @@ export function LearningPage() {
                 Achievements
               </h3>
               <div className="mt-3 grid grid-cols-3 gap-2">
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-purple-700/50 flex items-center justify-center">
-                    <Star className="h-5 w-5 text-yellow-400" />
+                {dummy.achievements.map((ach, idx) => (
+                  <div key={idx} className="flex flex-col items-center">
+                    <div className="w-10 h-10 rounded-full bg-purple-700/50 flex items-center justify-center">
+                      <ach.icon className={`h-5 w-5 ${ach.color}`} />
+                    </div>
+                    <span className="text-xs text-purple-300 mt-1">{ach.count}</span>
                   </div>
-                  <span className="text-xs text-purple-300 mt-1">3/5</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-purple-700/50 flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                  </div>
-                  <span className="text-xs text-purple-300 mt-1">1/3</span>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-purple-700/50 flex items-center justify-center">
-                    <Bookmark className="h-5 w-5 text-blue-400" />
-                  </div>
-                  <span className="text-xs text-purple-300 mt-1">2/7</span>
-                </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Main content */}
           <motion.div
             className="md:col-span-3"
             initial={{ opacity: 0, y: 20 }}
@@ -176,7 +201,7 @@ export function LearningPage() {
                   <Badge className="bg-indigo-700 ml-2 text-xs py-1">Unit {activeUnit.id}</Badge>
                   <div className="ml-auto flex items-center">
                     <Lightbulb className="h-5 w-5 text-yellow-400 mr-1" />
-                    <span className="text-yellow-400 text-sm font-medium">Tip: Take notes as you learn!</span>
+                    <span className="text-yellow-400 text-sm font-medium">{dummy.tip}</span>
                   </div>
                 </div>
 
@@ -186,28 +211,21 @@ export function LearningPage() {
                 </h2>
 
                 <div className="prose prose-invert max-w-none">
-                  <p className="text-purple-100 leading-relaxed">
-                    Tax authorities are government bodies responsible for administering and enforcing tax laws. In the
-                    United States, the primary federal tax authority is the Internal Revenue Service (IRS), which
-                    collects income taxes, payroll taxes, and other federal taxes.
-                  </p>
-
-                  <p className="text-purple-100 leading-relaxed mt-4">
-                    State tax authorities, such as the Franchise Tax Board in California or the Department of Revenue in
-                    many states, handle state-level taxes. Local governments may also have their own tax authorities for
-                    property taxes and other local levies.
-                  </p>
-
-                  <div className="bg-purple-800/50 p-4 rounded-lg mt-6 border-l-4 border-indigo-500">
-                    <h4 className="text-white font-bold flex items-center">
-                      <Lightbulb className="h-5 w-5 mr-2 text-yellow-400" />
-                      Key Insight
-                    </h4>
-                    <p className="text-purple-100 mt-2">
-                      Understanding which tax authority governs different types of taxes is crucial for proper
-                      compliance and knowing where to direct questions or concerns about your tax obligations.
+                  {activeUnit.content?.paragraphs?.map((para, i) => (
+                    <p key={i} className="text-purple-100 leading-relaxed mt-4">
+                      {para}
                     </p>
-                  </div>
+                  ))}
+
+                  {activeUnit.content?.insight && (
+                    <div className="bg-purple-800/50 p-4 rounded-lg mt-6 border-l-4 border-indigo-500">
+                      <h4 className="text-white font-bold flex items-center">
+                        <Lightbulb className="h-5 w-5 mr-2 text-yellow-400" />
+                        {activeUnit.content.insight.title}
+                      </h4>
+                      <p className="text-purple-100 mt-2">{activeUnit.content.insight.message}</p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-8 flex justify-end">
@@ -221,7 +239,6 @@ export function LearningPage() {
                 </div>
               </div>
 
-              {/* Decorative elements */}
               <div className="absolute top-10 right-10 opacity-10">
                 <FileText className="h-32 w-32 text-indigo-300" />
               </div>
@@ -234,18 +251,12 @@ export function LearningPage() {
                   Related Topics
                 </h3>
                 <ul className="mt-3 space-y-2">
-                  <li className="text-purple-200 flex items-center">
-                    <div className="w-2 h-2 rounded-full bg-indigo-400 mr-2"></div>
-                    Tax Compliance Requirements
-                  </li>
-                  <li className="text-purple-200 flex items-center">
-                    <div className="w-2 h-2 rounded-full bg-indigo-400 mr-2"></div>
-                    IRS Structure and Functions
-                  </li>
-                  <li className="text-purple-200 flex items-center">
-                    <div className="w-2 h-2 rounded-full bg-indigo-400 mr-2"></div>
-                    State vs. Federal Tax Jurisdiction
-                  </li>
+                  {dummy.relatedTopics.map((topic, idx) => (
+                    <li key={idx} className="text-purple-200 flex items-center">
+                      <div className="w-2 h-2 rounded-full bg-indigo-400 mr-2"></div>
+                      {topic}
+                    </li>
+                  ))}
                 </ul>
               </Card>
 
@@ -260,12 +271,11 @@ export function LearningPage() {
                     <span className="text-white font-bold">{activeUnit.progress}%</span>
                   </div>
                   <Progress value={activeUnit.progress} className="h-2 bg-purple-950" />
-
                   <div className="flex justify-between text-sm mt-3 mb-1">
                     <span className="text-purple-200">Overall course</span>
-                    <span className="text-white font-bold">22%</span>
+                    <span className="text-white font-bold">{dummy.overallProgress}%</span>
                   </div>
-                  <Progress value={22} className="h-2 bg-purple-950" />
+                  <Progress value={dummy.overallProgress} className="h-2 bg-purple-950" />
                 </div>
               </Card>
             </div>
