@@ -7,7 +7,6 @@ interface Topic {
     title: string;
     description: string;
     content: string;
-    unit: string;
     createdAt: Date;
     updatedAt: Date;
     tags: string[];
@@ -18,12 +17,10 @@ const TopicSchema = new Schema<Topic>({
     title: { type: String, required: true },
     description: { type: String, required: true },
     content: { type: String, required: true },
-    unit: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     tags: { type: [String], default: [] },
 });
 
-const TopicModel = models["Topic"] || model<Topic>("Topic", TopicSchema);
-
-export { TopicModel, TopicSchema };
+const Topic = models["Topic"] || model<Topic>("Topic", TopicSchema);
+export default Topic

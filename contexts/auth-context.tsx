@@ -10,11 +10,11 @@ interface User {
   _id: string;
   name: string;
   email: string;
-  streak: string;
-  level: string;
-  points: string;
+  streak: number;
+  level: number;
+  points: number;
   badges: string[];
-  achievements: string[];
+  achievements: any[];
   createdAt: {
     $date: string;
   };
@@ -25,11 +25,40 @@ const AuthContext = createContext<User>({
   _id: "12345",
   name: "John Doe",
   email: "test@gmail.com",
-  streak: "0",
-  level: "1",
-  points: "0",
+  streak: 1,
+  level: 1,
+  points: 100,
   badges: [],
-  achievements: [],
+  achievements: [
+  {
+    id: "wildfire",
+    name: "Wildfire",
+    desc: "Reach a 3 day streak",
+    progress: 33,
+    level: 1,
+    icon: "🔥",
+    color: "from-red-500 to-orange-500",
+  },
+  {
+    id: "sage",
+    name: "Sage",
+    desc: "Earn 100 XP",
+    progress: 12,
+    level: 1,
+    icon: "🧠",
+    color: "from-green-500 to-emerald-500",
+  },
+  {
+    id: "scholar",
+    name: "Scholar",
+    desc: "Learn 50 new tax terms in a single course",
+    progress: 2,
+    level: 1,
+    icon: "📜",
+    color: "from-red-500 to-pink-500",
+  },
+]
+,
   createdAt: {
     $date: "2025-04-05T16:57:17.626Z",
   },
@@ -41,9 +70,9 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     _id: "12345",
     name: "John Doe",
     email: "test@gmail.com",
-    streak: "0",
-    level: "1",
-    points: "0",
+    streak: 2,
+    level: 1,
+    points: 100,
     badges: [],
     achievements: [],
     createdAt: {

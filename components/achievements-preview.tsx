@@ -4,38 +4,11 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
+import useAuth from "@/contexts/auth-context"
 
-const achievements = [
-  {
-    id: "wildfire",
-    name: "Wildfire",
-    desc: "Reach a 3 day streak",
-    progress: 33,
-    level: 1,
-    icon: "🔥",
-    color: "from-red-500 to-orange-500",
-  },
-  {
-    id: "sage",
-    name: "Sage",
-    desc: "Earn 100 XP",
-    progress: 12,
-    level: 1,
-    icon: "🧠",
-    color: "from-green-500 to-emerald-500",
-  },
-  {
-    id: "scholar",
-    name: "Scholar",
-    desc: "Learn 50 new tax terms in a single course",
-    progress: 2,
-    level: 1,
-    icon: "📜",
-    color: "from-red-500 to-pink-500",
-  },
-]
 
 export function AchievementsPreview() {
+  const {achievements} = useAuth()
   const [selectedAchievement, setSelectedAchievement] = useState(0)
 
   return (

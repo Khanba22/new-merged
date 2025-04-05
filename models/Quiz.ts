@@ -1,4 +1,5 @@
 import { Schema,model,models } from "mongoose";
+import Topic from "./Topic";
 
 interface Quiz {
     topic: Schema.Types.ObjectId;
@@ -15,7 +16,8 @@ interface Quiz {
 }
 
 const QuizSchema = new Schema<Quiz>({
-    topic: { type: Schema.Types.ObjectId, ref: '', required: true },
+    topic: { type: Schema.Types.ObjectId, required: true, ref:Topic },
+
     title: { type: String, required: true },
     description: { type: String, required: true },
     questions: [

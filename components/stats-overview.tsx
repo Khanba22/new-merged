@@ -1,9 +1,14 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import useAuth from "@/contexts/auth-context"
 import { Flame, Zap, Shield, Trophy } from "lucide-react"
 
 export function StatsOverview() {
+
+  const {streak,points} = useAuth()
+  console.log(points)
+
   return (
     <Card className="bg-gradient-to-br from-gray-900/95 to-gray-900/95 border-gray-800">
       <CardHeader>
@@ -17,7 +22,7 @@ export function StatsOverview() {
               <Flame className="h-5 w-5 text-white" />
             </div>
             <div>
-              <p className="text-xl font-bold text-white">1</p>
+              <p className="text-xl font-bold text-white">{streak}</p>
               <p className="text-xs text-gray-400">Day streak</p>
             </div>
           </div>
@@ -27,7 +32,7 @@ export function StatsOverview() {
               <Zap className="h-5 w-5 text-white" />
             </div>
             <div>
-              <p className="text-xl font-bold text-white">12</p>
+              <p className="text-xl font-bold text-white">{points}</p>
               <p className="text-xs text-gray-400">Total XP</p>
             </div>
           </div>

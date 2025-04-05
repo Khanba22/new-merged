@@ -1,7 +1,8 @@
 import { model, models, Schema } from "mongoose";
+import Topic from "./Topic";
 
 interface CaseStudyQuiz{
-    topic: string;
+    topic: Schema.Types.ObjectId;
     title: string;
     description: string;
     case:string;
@@ -16,7 +17,7 @@ interface CaseStudyQuiz{
 }
 
 const CaseStudyQuizSchema = new Schema<CaseStudyQuiz>({
-    topic: { type: String, required: true },
+    topic: { type: Schema.Types.ObjectId, required: true, ref:Topic },
     title: { type: String, required: true },
     description: { type: String, required: true },
     case:{type:String,required:true},
