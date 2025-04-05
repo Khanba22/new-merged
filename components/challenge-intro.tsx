@@ -10,7 +10,7 @@ export function ChallengeIntro() {
   const router = useRouter()
 
   return (
-    <div className="min-h-screen min-w-85vw bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-900">
+    <div className="min-h-screen w-[80vw] min-w-85vw bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-900">
       <div className="container mx-auto px-4 py-8">
         <Button variant="ghost" className="text-white mb-8" onClick={() => router.back()}>
           <ArrowLeft className="h-4 w-4 mr-2" />
