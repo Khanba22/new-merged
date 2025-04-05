@@ -23,7 +23,7 @@ export function AchievementsPreview() {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {user.achievements?.map((achievement, index) => (
+        {user?.achievements?.map((achievement, index) => (
           <div
             key={achievement.id}
             className={`p-4 rounded-lg bg-gray-800/60 flex items-start ${

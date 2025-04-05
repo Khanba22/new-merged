@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async(req:NextRequest)=>{
     await connectToDB()
     const {id} = await req.json();
+    console.log(id)
     const user = await User.findById(id);
     if(!user){
         return NextResponse.json({

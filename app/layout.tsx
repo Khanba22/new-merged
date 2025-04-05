@@ -33,7 +33,7 @@ export default function RootLayout({
             <ChatbotProvider>
               <div className="flex min-h-screen">
                 <MainSidebar />
-                <main className="flex-1 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 overflow-auto">
+                <main className="flex-1 bg-gradient-to-br from-gray-900 via-purple-900 w-full to-blue-900 overflow-auto">
                   <AuthProvider>
                     <TopicProvider>{children}</TopicProvider>
                   </AuthProvider>
