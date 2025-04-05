@@ -103,14 +103,6 @@ export function MainSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
 
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={pathname === "/quests"}>
-              <Link href="/quests">
-                <Gift />
-                <span>Quests</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
 
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/calculator"}>
