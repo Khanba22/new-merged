@@ -85,10 +85,10 @@ export function MainSidebar() {
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={pathname === "/techterm"}>
-              <Link href="/techterm">
+            <SidebarMenuButton asChild isActive={pathname === "/taxterm"}>
+              <Link href="/taxterm">
                 <Lightbulb />
-                <span>Tech Term of the Day</span>
+                <span>Tax Term of the Day</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
