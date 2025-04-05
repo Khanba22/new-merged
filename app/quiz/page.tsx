@@ -23,6 +23,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { askAgent } from "@/lib/generate";
 
 
 
@@ -41,11 +42,9 @@ export default function QuizPage() {
   const [loading, setLoading] = useState(true);
 
   const generateQuiz = async () => {
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000);
-    setQuestions(dummy);
+    const data = await askAgent("generate_topics")
+    setLoading(false)
+    setQuestions(data)
   };
 
   useEffect(() => {

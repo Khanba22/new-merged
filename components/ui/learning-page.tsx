@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import {
@@ -20,7 +20,9 @@ import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import useTopic from "@/contexts/topic-context"
 import useAuth from "@/contexts/auth-context"
+import { askAgent } from "@/lib/generate"
 
+// Complete dummy data with all required properties
 const dummy = {
   points: 1200,
   streak: 5,
@@ -29,69 +31,109 @@ const dummy = {
   units: [
     {
       id: 1,
-      title: "Tax Fundamentals",
-      sections: [
-        { id: 1, title: "What are Taxes?", completed: true },
-        { id: 2, title: "Types of Taxes", completed: true },
-        { id: 3, title: "Tax Authorities", completed: false },
-      ],
-      progress: 66,
+      title: "Tax Basics",
+      progress: 80,
       icon: BookOpen,
+      sections: [
+        { id: 1, title: "Introduction to Taxation" },
+        { id: 2, title: "Tax Terminology" },
+        { id: 3, title: "Filing Status" }
+      ],
       content: {
         paragraphs: [
-          "Tax authorities are government bodies responsible for administering and enforcing tax laws. In the United States, the primary federal tax authority is the Internal Revenue Service (IRS), which collects income taxes, payroll taxes, and other federal taxes.",
-          "State tax authorities, such as the Franchise Tax Board in California or the Department of Revenue in many states, handle state-level taxes. Local governments may also have their own tax authorities for property taxes and other local levies.",
+          "Taxation is a fundamental aspect of modern economies. It refers to the process by which governments levy financial charges on individuals and entities.",
+          "Understanding basic tax principles is essential for financial literacy and responsible citizenship."
         ],
         insight: {
           title: "Key Insight",
-          message:
-            "Understanding which tax authority governs different types of taxes is crucial for proper compliance and knowing where to direct questions or concerns about your tax obligations.",
-        },
-      },
+          message: "Tax laws change regularly. Always check for the most current information when filing."
+        }
+      }
     },
     {
       id: 2,
-      title: "Income Tax Basics",
-      sections: [
-        { id: 1, title: "Taxable Income", completed: false },
-        { id: 2, title: "Tax Brackets", completed: false },
-        { id: 3, title: "Filing Status", completed: false },
-      ],
-      progress: 0,
+      title: "Income Tax",
+      progress: 40,
       icon: FileText,
+      sections: [
+        { id: 1, title: "Types of Income" },
+        { id: 2, title: "Deductions and Credits" }
+      ],
+      content: {
+        paragraphs: [
+          "Income tax is levied on various types of earnings, including wages, salaries, and investment income.",
+          "Understanding how different income types are taxed can help you optimize your financial decisions."
+        ]
+      }
     },
     {
       id: 3,
-      title: "Deductions & Credits",
-      sections: [
-        { id: 1, title: "Standard Deduction", completed: false },
-        { id: 2, title: "Itemized Deductions", completed: false },
-        { id: 3, title: "Common Tax Credits", completed: false },
-      ],
+      title: "Tax Planning",
       progress: 0,
       icon: TrendingUp,
-    },
+      sections: [
+        { id: 1, title: "Long-term Tax Strategy" }
+      ],
+      content: {
+        paragraphs: [
+          "Tax planning involves analyzing your financial situation to ensure tax efficiency.",
+          "Effective tax planning can lead to significant savings and better financial outcomes."
+        ]
+      }
+    }
   ],
   achievements: [
-    { icon: Star, count: "3/5", color: "text-yellow-400" },
-    { icon: CheckCircle, count: "1/3", color: "text-green-400" },
-    { icon: Bookmark, count: "2/7", color: "text-blue-400" },
+    { icon: Star, color: "text-yellow-400", count: 3 },
+    { icon: CheckCircle, color: "text-green-400", count: 5 },
+    { icon: Bookmark, color: "text-blue-400", count: 2 }
   ],
   relatedTopics: [
-    "Tax Compliance Requirements",
-    "IRS Structure and Functions",
-    "State vs. Federal Tax Jurisdiction",
-  ],
+    "Tax Deductions for Small Businesses",
+    "Estate Tax Planning",
+    "International Tax Considerations",
+    "Tax Software Comparison"
+  ]
 }
 
 export function LearningPage() {
   const topic = useTopic()
   const user = useAuth()
   const router = useRouter()
+  const [loading,setLoading] = useState(true)
 
-  const [activeUnit, setActiveUnit] = useState(dummy.units[0])
-  const [activeSection, setActiveSection] = useState(activeUnit.sections[2])
 
+
+  const [units, setUnits] = useState([])
+const [activeUnit, setActiveUnit] = useState(null)
+const [activeSection, setActiveSection] = useState(null)
+
+useEffect(() => {
+  const getTopics = async () => {
+    const data = await askAgent("generate_topics")
+    setUnits(data)
+    setActiveUnit(data[0])
+    setActiveSection(data[0]?.sections?.[0])
+    setLoading(false)
+  }
+
+  getTopics()
+}, [])
+ 
+  if (loading) {
+    return (
+      <div className="h-screen w-[80vw] bg-gradient-to-br from-bg-purple-900 to-bg-purple-800 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white/30 mx-auto"></div>
+          <h1 className="text-white text-2xl font-semibold animate-pulse">
+            Loading your tax adventure...
+          </h1>
+          <p className="text-purple-200 text-sm">
+            Hang tight, we’re crunching the numbers!
+          </p>
+        </div>
+      </div>
+    );
+  }
   const handleChallengeClick = () => {
     router.push("/challenge")
   }
@@ -124,7 +166,7 @@ export function LearningPage() {
           <div className="md:col-span-1 space-y-4">
             <h2 className="text-xl font-bold text-white mb-4">Learning Path</h2>
 
-            {dummy.units.map((unit) => (
+            {units.map((unit) => (
               <motion.div
                 key={unit.id}
                 whileHover={{ scale: 1.02 }}
