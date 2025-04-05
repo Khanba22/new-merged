@@ -33,6 +33,7 @@ export default function GamesPage() {
       id: 2,
       title: "Case Study",
       type: "drag-drop",
+      
       icon: <DragDropIcon className="w-6 h-6" />,
       description: "Sort different types of income into their correct categories",
       unit: "Test your learning ability with real life examples",
