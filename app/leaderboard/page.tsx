@@ -12,7 +12,7 @@ export default function Page() {
       </CardHeader>
 
       <CardContent>
-        <div className="flex items-center space-x-4">
+        <div className="h-screen w-screen flex flex-1">
           <div className="w-12 h-12 bg-gray-800 rounded-md flex items-center justify-center">
             <Shield className="h-6 w-6 text-gray-600" />
           </div>
@@ -29,6 +29,7 @@ export default function Page() {
             rewards!
           </p>
         </div>
+        
       </CardContent>
     </Card>
   )
