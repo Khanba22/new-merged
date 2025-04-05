@@ -193,7 +193,7 @@ export default function TaxTermOfTheDay() {
                   onClick={() => setIsFlipped(true)}
                   className="mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
                 >
-                  Flip to know the meaning
+                  Flip to know
                 </Button>
               </div>
             </Card>
@@ -210,7 +210,7 @@ export default function TaxTermOfTheDay() {
                 <Button
                   onClick={() => setIsFlipped(false)}
                   variant="outline"
-                  className="mt-2 border-purple-400 text-purple-700 hover:bg-purple-50"
+                  className="mt-2 flip-back border-purple-400 text-purple-700 hover:bg-purple-50"
                 >
                   Flip back
                 </Button>

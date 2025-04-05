@@ -85,6 +85,11 @@
   }
 }
 
+.flip-back{
+  color:white;
+ background: linear-gradient(135deg, #6C38FF, #A040FC, #D063FD);
+  
+}
 
 body {
   font-family: Arial, Helvetica, sans-serif;
