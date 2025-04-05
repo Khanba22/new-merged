@@ -1,7 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Brain, Car, CropIcon as DragDropIcon, ListChecks, Puzzle, Trophy, Sparkles, Gift } from "lucide-react";
+import { useState } from "react";
+import {
+  Brain,
+  Car,
+  CropIcon as DragDropIcon,
+  ListChecks,
+  Puzzle,
+  Trophy,
+  Sparkles,
+  Gift,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 
 interface Game {
@@ -18,6 +28,7 @@ export default function GamesPage() {
   const [currentGame, setCurrentGame] = useState<Game | null>(null);
   const [score, setScore] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
+  const router = useRouter();
 
   const games: Game[] = [
     {
@@ -30,31 +41,12 @@ export default function GamesPage() {
       available: true,
     },
     {
-      id: 2,
-      title: "Case Study",
-      type: "drag-drop",
-      
-      icon: <DragDropIcon className="w-6 h-6" />,
-      description: "Sort different types of income into their correct categories",
-      unit: "Test your learning ability with real life examples",
-      available: true,
-    },
-    {
       id: 3,
       title: "Tax Quiz Challenge",
       type: "quiz",
       icon: <Brain className="w-6 h-6" />,
       description: "Test your knowledge with multiple-choice questions",
       unit: "Tax Calculations",
-      available: false,
-    },
-    {
-      id: 4,
-      title: "Match the Deductions",
-      type: "matching",
-      icon: <ListChecks className="w-6 h-6" />,
-      description: "Match deductions with their correct descriptions",
-      unit: "Deductions and Credits",
       available: true,
     },
   ];
@@ -66,18 +58,32 @@ export default function GamesPage() {
       { term: "Tax Credit", definition: "A dollar-for-dollar reduction in tax liability" },
       { term: "Exemption", definition: "Income that is excluded from taxation" },
     ],
+    matching: [
+      { id: 1, left: "Standard Deduction", right: "A fixed amount everyone can subtract from income" },
+      { id: 2, left: "Child Tax Credit", right: "A credit for taxpayers with dependent children" },
+      { id: 3, left: "Medical Expenses", right: "Deductions for qualifying healthcare costs" },
+    ],
+    dragDropItems: [
+      { label: "Salary", category: "Earned Income" },
+      { label: "Rental Income", category: "Passive Income" },
+      { label: "Capital Gains", category: "Investment Income" },
+    ],
     currentCardIndex: 0,
     isFlipped: false,
   });
 
   const handleGameSelect = (game: Game) => {
     if (!game.available) return;
+    if (game.type === "quiz") {
+      router.push("/quiz");
+      return;
+    }
     setCurrentGame(game);
     setScore(0);
   };
 
   const handleCorrectAnswer = () => {
-    setScore(prev => prev + 10);
+    setScore((prev) => prev + 10);
     setShowConfetti(true);
     setTimeout(() => setShowConfetti(false), 2000);
   };
@@ -99,7 +105,10 @@ export default function GamesPage() {
 
         {showConfetti && (
           <div className="fixed inset-0 pointer-events-none">
-            <Sparkles className="absolute animate-bounce text-yellow-400 w-8 h-8" style={{ left: '50%', top: '50%' }} />
+            <Sparkles
+              className="absolute animate-bounce text-yellow-400 w-8 h-8"
+              style={{ left: "50%", top: "50%" }}
+            />
           </div>
         )}
 
@@ -109,14 +118,12 @@ export default function GamesPage() {
               <Card
                 key={game.id}
                 className={`p-6 cursor-pointer transform transition-all duration-300 hover:scale-105 ${
-                  game.available ? 'bg-white/10 hover:bg-white/20' : 'bg-white/5 cursor-not-allowed'
+                  game.available ? "bg-white/10 hover:bg-white/20" : "bg-white/5 cursor-not-allowed"
                 }`}
                 onClick={() => handleGameSelect(game)}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="p-3 rounded-full bg-white/10">
-                    {game.icon}
-                  </div>
+                  <div className="p-3 rounded-full bg-white/10">{game.icon}</div>
                   <div>
                     <h3 className="text-xl font-semibold text-white">{game.title}</h3>
                     <p className="text-sm text-purple-200">{game.unit}</p>
@@ -143,68 +150,73 @@ export default function GamesPage() {
                 Back to Games
               </button>
             </div>
-            
+
             {currentGame.type === "flashcards" && (
-             <div
-             className="flip-card bg-white/5 rounded-xl p-8 cursor-pointer min-h-[300px] flex items-center justify-center"
-             onClick={() =>
-               setGameContent((prev) => ({ ...prev, isFlipped: !prev.isFlipped }))
-             }
-           >
-             <div
-               className={`flip-inner w-full h-full text-center ${
-                 gameContent.isFlipped ? "rotate-y-180" : ""
-               }`}
-             >
-               <div className="flip-front flex items-center justify-center h-full">
-                 <div className="w-full">
-                   <h3 className="text-2xl font-bold text-white mb-4">
-                     {gameContent.flashcards[gameContent.currentCardIndex].term}
-                   </h3>
-                   <p className="text-purple-200 text-sm">Flip to know</p>
-                 </div>
-               </div>
-               <div className="flip-back flex items-center justify-center h-full bg-white/5 rounded-xl">
-                 <div className="w-full">
-                   <h3 className="text-2xl font-bold text-white mb-4">
-                     {gameContent.flashcards[gameContent.currentCardIndex].definition}
-                   </h3>
-                   <p className="text-purple-200 text-sm">Flip to know</p>
-                 </div>
-               </div>
-             </div>
-           </div>
-           
-            
+              <div
+                className="flip-card bg-white/5 rounded-xl p-8 cursor-pointer min-h-[300px] flex items-center justify-center"
+                onClick={() =>
+                  setGameContent((prev) => ({ ...prev, isFlipped: !prev.isFlipped }))
+                }
+              >
+                <div
+                  className={`flip-inner w-full h-full text-center ${
+                    gameContent.isFlipped ? "rotate-y-180" : ""
+                  }`}
+                >
+                  <div className="flip-front flex items-center justify-center h-full">
+                    <div className="w-full">
+                      <h3 className="text-2xl font-bold text-white mb-4">
+                        {gameContent.flashcards[gameContent.currentCardIndex].term}
+                      </h3>
+                      <p className="text-purple-200 text-sm">Flip to know</p>
+                    </div>
+                  </div>
+                  <div className="flip-back flex items-center justify-center h-full bg-white/5 rounded-xl">
+                    <div className="w-full">
+                      <h3 className="text-2xl font-bold text-white mb-4">
+                        {gameContent.flashcards[gameContent.currentCardIndex].definition}
+                      </h3>
+                      <p className="text-purple-200 text-sm">Flip to go back</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
 
-            <div className="flex justify-center mt-6 gap-4">
-              <button
-                onClick={() => {
-                  setGameContent(prev => ({
-                    ...prev,
-                    currentCardIndex: (prev.currentCardIndex - 1 + prev.flashcards.length) % prev.flashcards.length,
-                    isFlipped: false,
-                  }));
-                }}
-                className="px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => {
-                  handleCorrectAnswer();
-                  setGameContent(prev => ({
-                    ...prev,
-                    currentCardIndex: (prev.currentCardIndex + 1) % prev.flashcards.length,
-                    isFlipped: false,
-                  }));
-                }}
-                className="px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
-              >
-                Next
-              </button>
-            </div>
+
+
+            {currentGame.type === "flashcards" && (
+              <div className="flex justify-center mt-6 gap-4">
+                <button
+                  onClick={() => {
+                    setGameContent((prev) => ({
+                      ...prev,
+                      currentCardIndex:
+                        (prev.currentCardIndex - 1 + prev.flashcards.length) %
+                        prev.flashcards.length,
+                      isFlipped: false,
+                    }));
+                  }}
+                  className="px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+                >
+                  Previous
+                </button>
+                <button
+                  onClick={() => {
+                    handleCorrectAnswer();
+                    setGameContent((prev) => ({
+                      ...prev,
+                      currentCardIndex:
+                        (prev.currentCardIndex + 1) % prev.flashcards.length,
+                      isFlipped: false,
+                    }));
+                  }}
+                  className="px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -387,7 +387,7 @@ export default function QuizPage() {
   }
 
   return (
-    <div className="min-h-screen w-screen bg-purple-900 flex flex-col items-center justify-center px-4 py-10">
+    <div className="min-h-screen w-[60vw] bg-purple-900 flex flex-col items-center justify-center px-4 py-10">
       <div className="w-full max-w-6xl flex flex-col">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-2">
@@ -417,8 +417,8 @@ export default function QuizPage() {
           </div>
           <Progress 
             value={(current / questions.length) * 100} 
-            className="h-2 mb-2 bg-purple-700" 
-            indicatorClassName="bg-yellow-400"
+            className="h-2 mb-2 bg-purple-700 relative overflow-hidden"
+            style={{ '--progress-indicator-color': 'bg-yellow-400' } as React.CSSProperties}
           />
           <div className="flex justify-between text-xs text-purple-300">
             <span>Question {current + 1} of {questions.length}</span>
