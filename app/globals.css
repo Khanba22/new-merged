@@ -80,13 +80,11 @@
   body {
     height: 100%;
     display:flex;
-    width:100%;
-
   }
 
   body {
     @apply bg-background text-foreground;
-    /* @apply antialiased; */
+    @apply antialiased;
   }
 }
 
