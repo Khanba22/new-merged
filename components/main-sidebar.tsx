@@ -104,15 +104,6 @@ export function MainSidebar() {
           </SidebarMenuItem>
 
 
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={pathname === "/calculator"}>
-              <Link href="/calculator">
-                <Calculator />
-                <span>Tax Calculator</span>
-                <Badge className="ml-auto bg-green-600">PRO</Badge>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
 
           
         </SidebarMenu>
