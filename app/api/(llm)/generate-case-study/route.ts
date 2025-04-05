@@ -1,11 +1,10 @@
 import Topic from "@/models/Topic";
 import { NextRequest, NextResponse } from "next/server"
-import { title } from "node:process";
 
 
 export const POST = async(req:NextRequest)=>{
     const {id} = await req.json();
-    const data = generateCaseStudy(id)
+    const data =await generateCaseStudy(id)
     return NextResponse.json(data);
 }
 

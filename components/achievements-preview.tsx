@@ -8,8 +8,10 @@ import useAuth from "@/contexts/auth-context"
 
 
 export function AchievementsPreview() {
-  const {achievements} = useAuth()
+  const user = useAuth()
   const [selectedAchievement, setSelectedAchievement] = useState(0)
+
+  console.log(user,"Achievements")
 
   return (
     <Card className="bg-gradient-to-br from-gray-900/95 to-gray-900/95 border-gray-800">
@@ -21,7 +23,7 @@ export function AchievementsPreview() {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {achievements.map((achievement, index) => (
+        {user.achievements?.map((achievement, index) => (
           <div
             key={achievement.id}
             className={`p-4 rounded-lg bg-gray-800/60 flex items-start ${

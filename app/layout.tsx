@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { MainSidebar } from "@/components/main-sidebar";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/contexts/auth-context";
+import { TopicProvider } from "@/contexts/topic-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,9 @@ export default function RootLayout({
               <div className="flex min-h-screen">
                 <MainSidebar />
                 <main className="flex-1 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 overflow-auto">
-                  <AuthProvider>{children}</AuthProvider>
+                  <AuthProvider>
+                    <TopicProvider>{children}</TopicProvider>
+                  </AuthProvider>
                 </main>
               </div>
               <Toaster />

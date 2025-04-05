@@ -24,7 +24,7 @@ export const GET = async (req: Request) => {
 
         const data = await res.json();
         return new Response(JSON.stringify(data), { status: 200 });
-    } catch (error) {
+    } catch (error ) {
         return new Response(JSON.stringify({ error: error.message }), {
             status: 500,
         });

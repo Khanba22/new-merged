@@ -60,9 +60,9 @@ export const POST = async (req: Request) => {
       user,
       name,
       email,
-      streak: "0",
-      level: "1",
-      points: "0",
+      streak: 0,
+      level: 1,
+      points: 0,
       badges: [],
       achievements: [],
     });

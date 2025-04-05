@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 interface Profile{
     name: string;
     email: string;
-    streak:string;
-    level:string;
-    points:string;
+    streak:number;
+    level:number;
+    points:number;
     badges:string[];
     achievements:string[];
     createdAt: Date;
@@ -24,15 +24,15 @@ const ProfileSchema = new mongoose.Schema<Profile>({
         lowercase: true,
     },
     streak:{
-        type:String,
+        type:Number,
         required:true
     },
     level:{
-        type:String,
+        type:Number,
         required:true
     },
     points:{
-        type:String,
+        type:Number,
         required:true
     },
     badges:{
@@ -40,7 +40,7 @@ const ProfileSchema = new mongoose.Schema<Profile>({
         required:true
     },
     achievements:{
-        type:[String],
+        type:[],
         required:true
     },
     createdAt: {

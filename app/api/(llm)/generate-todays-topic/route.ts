@@ -2,12 +2,17 @@ import connectToDB from "@/database/connectToDB";
 import Profile from "@/models/Profile";
 import Topic from "@/models/Topic";
 import User from "@/models/User";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async(req:NextRequest)=>{
     await connectToDB()
     const {id} = await req.json();
     const user = await User.findById(id);
+    if(!user){
+        return NextResponse.json({
+            error:"User Not FOund"
+        })
+    }
     const topic = await Topic.findOne({
         user: user._id,
         date: {

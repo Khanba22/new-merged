@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useState } from "react";
+"use client"
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import useAuth from "./auth-context";
 
 interface Topic {
   user: string;
@@ -22,7 +24,9 @@ const TopicContext = createContext<Topic>({
   _id: "67f18a447e256ec1796ea1e7",
 });
 
+
 export const TopicProvider = ({ children }: { children: ReactNode }) => {
+    const user = useAuth()
   const [topic, setTopic] = useState({
     user: "67f16411254bfbf96c593e9d",
     title: "Sample Topic Title",
@@ -34,7 +38,30 @@ export const TopicProvider = ({ children }: { children: ReactNode }) => {
     _id: "67f18a447e256ec1796ea1e7",
   });
 
+  useEffect(()=>{
+    const getTodaysTopic = async()=>{
+        console.log(user)
+        if(!user){
+            return
+        }
+        const res = await fetch("/api/generate-todays-topic",{
+            method:"POST",
+            body:JSON.stringify({id:user._id})
+        })
+        const data = await res.json();
+        console.log(data)
+        setTopic(data)
+    }
+    getTodaysTopic()
+  },[user._id])
+
   return (
     <TopicContext.Provider value={topic}>{children}</TopicContext.Provider>
   );
 };
+
+const useTopic = ()=>{
+    const topic = useContext(TopicContext);
+    return topic
+}
+export default useTopic

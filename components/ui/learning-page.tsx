@@ -7,6 +7,7 @@ import { BookOpen, Award, Star, CheckCircle, Clock, TrendingUp, Zap, Bookmark, F
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
+import useTopic from "@/contexts/topic-context"
 
 const units = [
   {
@@ -45,6 +46,10 @@ const units = [
 ]
 
 export function LearningPage() {
+
+  const topic = useTopic()
+  console.log(topic,"Topic")
+
   const router = useRouter()
   const [activeUnit, setActiveUnit] = useState(units[0])
   const [activeSection, setActiveSection] = useState(activeUnit.sections[2])
