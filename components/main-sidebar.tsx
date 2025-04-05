@@ -140,7 +140,7 @@ export function MainSidebar() {
             <SidebarMenuButton asChild isActive={pathname === "/more"}>
               <Link href="/more">
                 <Menu />
-                <span>More</span>
+                <span>More options</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
