@@ -1,5 +1,5 @@
 "use client"
-
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
@@ -37,7 +37,7 @@ export function TechTermCard() {
     <Card className="bg-gradient-to-br from-blue-900/80 to-purple-900/80 border-blue-700">
       <CardHeader>
         <CardTitle className="text-white flex items-center justify-between">
-          <span>Tech Term of the Day</span>
+          <span>Tax Term of the Day</span>
           <Button variant="ghost" size="icon" onClick={handleNextTerm} className="text-gray-300 hover:text-white">
             <RefreshCw className="h-4 w-4" />
           </Button>
@@ -69,11 +69,16 @@ export function TechTermCard() {
           )}
         </motion.div>
 
+        
+
+
         <div className="mt-4 flex justify-center">
+        <Link href="/taxterm" passHref>
           <Button variant="outline" className="text-white border-blue-500 bg-blue-900/30 hover:bg-blue-800">
             <BookOpen className="h-4 w-4 mr-2" />
-            Learn More
+            Learn More 
           </Button>
+          </Link>  
         </div>
       </CardContent>
     </Card>
