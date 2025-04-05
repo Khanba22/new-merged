@@ -174,3 +174,10 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+html{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}

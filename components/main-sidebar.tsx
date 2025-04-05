@@ -68,7 +68,7 @@ export function MainSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/learn"}>
-              <Link href="/learn">
+              <Link href="/learning">
                 <BookOpen />
                 <span>Learn</span>
               </Link>
@@ -77,7 +77,7 @@ export function MainSidebar() {
 
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/taxtrivia"}>
-              <Link href="/taxtrivia">
+              <Link href="/games">
                 <FileText />
                 <span>Tax Trivia</span>
               </Link>
