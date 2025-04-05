@@ -30,9 +30,9 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark">
           <SidebarProvider>
             <ChatbotProvider>
-              <div className="flex min-h-screen">
+            <div className="flex min-h-screen w-full">
                 <MainSidebar />
-                <main className="flex-1 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 overflow-auto">
+                <main className="flex-1 bg-gradient-to-b from-purple-500 to-blue-500 p-6">
                   {children}
                 </main>
               </div>
