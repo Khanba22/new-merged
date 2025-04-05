@@ -51,25 +51,12 @@ interface User {
   __v: number;
 }
 
-const AuthContext = createContext<User>({
-  _id: "67f1902fdb12b94843667d02",
-  name: "John Doe",
-  email: "test@gmail.com",
-  streak: 1,
-  level: 1,
-  points: 100,
-  badges: [],
-  achievements: dummyAchievements,
-  createdAt: {
-    $date: "2025-04-05T16:57:17.626Z",
-  },
-  __v: 0,
-});
+const AuthContext = createContext<User | null>(null);
 
 export const AuthProvider = ({ children }: AuthContextProps) => {
   const [profile, setProfile] = useState({
     _id: "67f1902fdb12b94843667d02",
-    name: "John Doe",
+    name: "",
     email: "test@gmail.com",
     streak: 2,
     level: 1,
@@ -82,16 +69,18 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     __v: 0,
   });
 
+  const fetchProfile = async()=>{
+    if(!profile) return;
+    const res = await fetch(`/api/profile/${profile._id}`)
+    const data = await res.json();
+    console.log("Fetched Profile",data)
+    setProfile(data)
+  }
+
   useEffect(()=>{
-    const fetchProfile = async()=>{
-      if(!profile) return;
-      const res = await fetch(`/api/profile/${profile._id}`)
-      const data = await res.json();
-      console.log("Fetched Profile",data)
-      setProfile(data)
-    }
+    if(profile.name !== "") return
     fetchProfile()
-  },[profile._id])
+  },[profile])
 
   return (
     <AuthContext.Provider value={{ ...profile }}>

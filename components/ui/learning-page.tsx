@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import useTopic from "@/contexts/topic-context"
+import useAuth from "@/contexts/auth-context"
 
 const units = [
   {
@@ -48,6 +49,7 @@ const units = [
 export function LearningPage() {
 
   const topic = useTopic()
+  const user = useAuth()
   console.log(topic,"Topic")
 
   const router = useRouter()
@@ -73,11 +75,11 @@ export function LearningPage() {
           <div className="ml-auto flex items-center space-x-4">
             <div className="flex items-center bg-purple-800/50 rounded-full px-3 py-1">
               <Zap className="h-4 w-4 text-yellow-400 mr-1" />
-              <span className="text-white font-bold">120 XP</span>
+              <span className="text-white font-bold">{user?.points}</span>
             </div>
             <div className="flex items-center bg-purple-800/50 rounded-full px-3 py-1">
               <Clock className="h-4 w-4 text-blue-400 mr-1" />
-              <span className="text-white font-bold">3 Day Streak</span>
+              <span className="text-white font-bold">{user?.streak} Day Streak</span>
             </div>
           </div>
         </div>
