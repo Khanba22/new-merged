@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress"
 export function LeaderboardTeaser() {
   return (
     <Card className="bg-gradient-to-br from-gray-900/95 to-gray-900/95 border-gray-800">
+      
       <CardHeader>
         <CardTitle className="text-white">Unlock Leaderboards!</CardTitle>
       </CardHeader>

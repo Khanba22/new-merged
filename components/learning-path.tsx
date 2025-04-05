@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { Avatar } from "@/components/ui/avatar"
 import { AvatarFallback } from "@/components/ui/avatar"
+import Link from "next/link"
 
 const lessons = [
   { id: 1, name: "Intro to Taxes", complete: true },
@@ -78,9 +79,15 @@ export function LearningPath() {
         </div>
 
         <div className="flex justify-center mt-8">
+        <Link href="/learning" passHref>
           <Button className="bg-gradient-to-r from-lime-500 to-green-600 text-white hover:from-lime-600 hover:to-green-700 font-bold text-lg px-8 py-6">
+          
             START
-          </Button>
+            </Button>
+            </Link>
+         
+        
+          
         </div>
 
         {/* Mascot */}
