@@ -38,7 +38,7 @@ export function MainSidebar() {
         <Link href="/" className="flex items-center space-x-2">
           <ReceiptText className="h-8 w-8 text-lime-500" />
           <span className="text-2xl font-bold bg-gradient-to-r from-lime-500 to-green-500 text-transparent bg-clip-text">
-            TaxLearn
+            TaxMate
           </span>
         </Link>
       </SidebarHeader>

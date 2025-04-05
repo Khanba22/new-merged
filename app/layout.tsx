@@ -14,7 +14,7 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "TaxLearn - Learn Tax The Fun Way",
+  title: "Taxify- Play, Learn, Taxify!",
   description: "Interactive and gamified tax learning platform",
     generator: 'v0.dev'
 }
