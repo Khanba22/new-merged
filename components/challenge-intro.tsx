@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Award, CheckCircle, Clock, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import Link from "next/link"
 
 export function ChallengeIntro() {
   const router = useRouter()
@@ -87,13 +88,14 @@ export function ChallengeIntro() {
               </div>
 
               <div className="flex justify-center">
+                <Link href={"/games"}>
                 <motion.button
                   className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Start Challenge
-                </motion.button>
+                </motion.button></Link>
               </div>
             </CardContent>
           </Card>
