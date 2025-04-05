@@ -9,6 +9,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+
+      rotateY180: {
+        transform: 'rotateY(180deg)',
+      },
+
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

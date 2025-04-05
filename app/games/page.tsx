@@ -145,18 +145,35 @@ export default function GamesPage() {
             
             {currentGame.type === "flashcards" && (
               <div
-                className="bg-white/5 rounded-xl p-8 cursor-pointer min-h-[300px] flex items-center justify-center transform transition-all duration-500"
-                onClick={() => setGameContent(prev => ({ ...prev, isFlipped: !prev.isFlipped }))}
+              className="flip-card bg-white/5 rounded-xl p-8 cursor-pointer min-h-[300px] flex items-center justify-center"
+              onClick={() =>
+                setGameContent((prev) => ({ ...prev, isFlipped: !prev.isFlipped }))
+              }
+            >
+              <div
+                className={`flip-inner w-full h-full text-center ${
+                  gameContent.isFlipped ? "transform rotate-y-180" : ""
+                }`}
               >
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold text-white mb-4">
-                    {gameContent.isFlipped
-                      ? gameContent.flashcards[gameContent.currentCardIndex].definition
-                      : gameContent.flashcards[gameContent.currentCardIndex].term}
-                  </h3>
-                  <p className="text-purple-200 text-sm">Click to flip</p>
+                <div className="flip-front flex items-center justify-center h-full">
+                  <div className="w-full">
+                    <h3 className="text-2xl font-bold text-white mb-4">
+                      {gameContent.flashcards[gameContent.currentCardIndex].term}
+                    </h3>
+                    <p className="text-purple-200 text-sm">Flip to know</p>
+                  </div>
+                </div>
+                <div className="flip-back flex items-center justify-center h-full bg-white/5 rounded-xl">
+                  <div className="w-full">
+                    <h3 className="text-2xl font-bold text-white mb-4">
+                      {gameContent.flashcards[gameContent.currentCardIndex].definition}
+                    </h3>
+                    <p className="text-purple-200 text-sm">Flip to know</p>
+                  </div>
                 </div>
               </div>
+            </div>
+            
             )}
 
             <div className="flex justify-center mt-6 gap-4">
