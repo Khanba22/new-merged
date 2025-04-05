@@ -51,7 +51,7 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-700 via-purple-800 to-blue-900 text-white">
+    <div className="min-h-screen w-[80vw] bg-gradient-to-br from-purple-700 via-purple-800 to-blue-900 text-white">
       <div className="container mx-auto p-4">
         {/* Navigation */}
         <nav className="flex items-center justify-between mb-8">

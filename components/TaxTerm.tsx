@@ -130,7 +130,7 @@ export default function TaxTermOfTheDay() {
   }, [])
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 flex flex-col items-center justify-center p-4">
+    <div className="relative w-[80vw] min-h-screen overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 flex flex-col items-center justify-center p-4">
       <CursorSpotlight />
 
       {/* Floating Icons */}

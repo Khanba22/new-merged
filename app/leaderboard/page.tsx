@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress"
 
 export default function Page() {
   return (
-    <Card className="bg-gradient-to-br from-gray-900/95 to-gray-900/95 border-gray-800">
+    <Card className="bg-gradient-to-br w-[80vw] from-gray-900/95 to-gray-900/95 border-gray-800">
       <CardHeader>
         <CardTitle className="text-white">Unlock Leaderboards!</CardTitle>
       </CardHeader>
