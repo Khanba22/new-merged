@@ -191,7 +191,7 @@ export default function TaxTermOfTheDay() {
                 <h2 className="text-2xl font-bold text-purple-800 mb-4">{currentTerm.term}</h2>
                 <Button
                   onClick={() => setIsFlipped(true)}
-                  className="mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+                  className="text-white mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
                 >
                   Flip to know
                 </Button>
@@ -210,7 +210,7 @@ export default function TaxTermOfTheDay() {
                 <Button
                   onClick={() => setIsFlipped(false)}
                   variant="outline"
-                  className="mt-2 flip-back border-purple-400 text-purple-700 hover:bg-purple-50"
+                  className="text-white mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
                 >
                   Flip back
                 </Button>
