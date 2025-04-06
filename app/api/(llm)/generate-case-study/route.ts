@@ -11,6 +11,9 @@ export const POST = async(req:NextRequest)=>{
 
 
 const generateCaseStudy = async(topicId:string)=>{
+
+    
+
     const topic = await Topic.findById(topicId)
 
     return {

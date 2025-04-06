@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   BookOpen,
   Award,
@@ -14,13 +14,13 @@ import {
   Bookmark,
   FileText,
   Lightbulb,
-} from "lucide-react"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { Card } from "@/components/ui/card"
-import useTopic from "@/contexts/topic-context"
-import useAuth from "@/contexts/auth-context"
-import { askAgent } from "@/lib/generate"
+} from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import useTopic from "@/contexts/topic-context";
+import useAuth from "@/contexts/auth-context";
+import { askAgent } from "@/lib/generate";
 
 // Complete dummy data with all required properties
 const dummy = {
@@ -37,18 +37,19 @@ const dummy = {
       sections: [
         { id: 1, title: "Introduction to Taxation" },
         { id: 2, title: "Tax Terminology" },
-        { id: 3, title: "Filing Status" }
+        { id: 3, title: "Filing Status" },
       ],
       content: {
         paragraphs: [
           "Taxation is a fundamental aspect of modern economies. It refers to the process by which governments levy financial charges on individuals and entities.",
-          "Understanding basic tax principles is essential for financial literacy and responsible citizenship."
+          "Understanding basic tax principles is essential for financial literacy and responsible citizenship.",
         ],
         insight: {
           title: "Key Insight",
-          message: "Tax laws change regularly. Always check for the most current information when filing."
-        }
-      }
+          message:
+            "Tax laws change regularly. Always check for the most current information when filing.",
+        },
+      },
     },
     {
       id: 2,
@@ -57,68 +58,77 @@ const dummy = {
       icon: FileText,
       sections: [
         { id: 1, title: "Types of Income" },
-        { id: 2, title: "Deductions and Credits" }
+        { id: 2, title: "Deductions and Credits" },
       ],
       content: {
         paragraphs: [
           "Income tax is levied on various types of earnings, including wages, salaries, and investment income.",
-          "Understanding how different income types are taxed can help you optimize your financial decisions."
-        ]
-      }
+          "Understanding how different income types are taxed can help you optimize your financial decisions.",
+        ],
+      },
     },
     {
       id: 3,
       title: "Tax Planning",
       progress: 0,
       icon: TrendingUp,
-      sections: [
-        { id: 1, title: "Long-term Tax Strategy" }
-      ],
+      sections: [{ id: 1, title: "Long-term Tax Strategy" }],
       content: {
         paragraphs: [
           "Tax planning involves analyzing your financial situation to ensure tax efficiency.",
-          "Effective tax planning can lead to significant savings and better financial outcomes."
-        ]
-      }
-    }
+          "Effective tax planning can lead to significant savings and better financial outcomes.",
+        ],
+      },
+    },
   ],
   achievements: [
     { icon: Star, color: "text-yellow-400", count: 3 },
     { icon: CheckCircle, color: "text-green-400", count: 5 },
-    { icon: Bookmark, color: "text-blue-400", count: 2 }
+    { icon: Bookmark, color: "text-blue-400", count: 2 },
   ],
   relatedTopics: [
     "Tax Deductions for Small Businesses",
     "Estate Tax Planning",
     "International Tax Considerations",
-    "Tax Software Comparison"
-  ]
-}
+    "Tax Software Comparison",
+  ],
+};
 
 export function LearningPage() {
-  const topic = useTopic()
-  const user = useAuth()
-  const router = useRouter()
-  const [loading,setLoading] = useState(true)
+  const topic = useTopic();
+  const user = useAuth();
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
+  const [units, setUnits] = useState([]);
+  const [activeUnit, setActiveUnit] = useState(null);
+  const [activeSection, setActiveSection] = useState(null);
 
+  useEffect(() => {
+    const getTopics = async () => {
+      const local = localStorage.getItem("todays");
+      if (local) {
+        const localJson = JSON.parse(local);
+        setUnits(localJson);
+        setActiveUnit(localJson[0]);
+        setActiveSection(localJson[0]?.sections?.[0]);
+        setLoading(false);
+        return;
+      }
+      const data = await askAgent({
+        template: "generate_topics",
+        context: "",
+      });
+      setUnits(data);
+      setActiveUnit(data[0]);
+      setActiveSection(data[0]?.sections?.[0]);
+      localStorage.setItem("todays", JSON.stringify(data));
+      setLoading(false);
+    };
 
-  const [units, setUnits] = useState([])
-const [activeUnit, setActiveUnit] = useState(null)
-const [activeSection, setActiveSection] = useState(null)
+    getTopics();
+  }, []);
 
-useEffect(() => {
-  const getTopics = async () => {
-    const data = await askAgent("generate_topics")
-    setUnits(data)
-    setActiveUnit(data[0])
-    setActiveSection(data[0]?.sections?.[0])
-    setLoading(false)
-  }
-
-  getTopics()
-}, [])
- 
   if (loading) {
     return (
       <div className="h-screen w-[80vw] bg-gradient-to-br from-bg-purple-900 to-bg-purple-800 flex items-center justify-center">
@@ -135,8 +145,8 @@ useEffect(() => {
     );
   }
   const handleChallengeClick = () => {
-    router.push("/challenge")
-  }
+    router.push("/challenge");
+  };
 
   return (
     <div className="min-h-screen w-[80vw] bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-900 pb-20">
@@ -148,7 +158,9 @@ useEffect(() => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Tax Today
+            <button onClick={() => localStorage.removeItem("todays")}>
+              Tax Today
+            </button>
           </motion.h1>
           <div className="ml-auto flex items-center space-x-4">
             <div className="flex items-center bg-purple-800/50 rounded-full px-3 py-1">
@@ -157,7 +169,9 @@ useEffect(() => {
             </div>
             <div className="flex items-center bg-purple-800/50 rounded-full px-3 py-1">
               <Clock className="h-4 w-4 text-blue-400 mr-1" />
-              <span className="text-white font-bold">{dummy.streak} Day Streak</span>
+              <span className="text-white font-bold">
+                {dummy.streak} Day Streak
+              </span>
             </div>
           </div>
         </div>
@@ -176,8 +190,8 @@ useEffect(() => {
                     : "bg-purple-800/30 hover:bg-purple-800/50"
                 }`}
                 onClick={() => {
-                  setActiveUnit(unit)
-                  setActiveSection(unit.sections[0])
+                  setActiveUnit(unit);
+                  setActiveSection(unit.sections[0]);
                 }}
               >
                 <div className="flex items-center mb-2">
@@ -200,10 +214,17 @@ useEffect(() => {
                       }`}
                     />
                   </div>
-                  <span className="ml-2 text-white font-medium">{unit.title}</span>
+                  <span className="ml-2 text-white font-medium">
+                    {unit.title}
+                  </span>
                 </div>
-                <Progress value={unit.progress} className="h-1.5 bg-purple-950" />
-                <div className="mt-2 text-xs text-purple-300">{unit.progress}% Complete</div>
+                <Progress
+                  value={unit.progress}
+                  className="h-1.5 bg-purple-950"
+                />
+                <div className="mt-2 text-xs text-purple-300">
+                  {unit.progress}% Complete
+                </div>
               </motion.div>
             ))}
 
@@ -218,7 +239,9 @@ useEffect(() => {
                     <div className="w-10 h-10 rounded-full bg-purple-700/50 flex items-center justify-center">
                       <ach.icon className={`h-5 w-5 ${ach.color}`} />
                     </div>
-                    <span className="text-xs text-purple-300 mt-1">{ach.count}</span>
+                    <span className="text-xs text-purple-300 mt-1">
+                      {ach.count}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -240,10 +263,14 @@ useEffect(() => {
                   <Badge className="bg-purple-700 text-xs py-1">
                     Section {activeSection.id} of {activeUnit.sections.length}
                   </Badge>
-                  <Badge className="bg-indigo-700 ml-2 text-xs py-1">Unit {activeUnit.id}</Badge>
+                  <Badge className="bg-indigo-700 ml-2 text-xs py-1">
+                    Unit {activeUnit.id}
+                  </Badge>
                   <div className="ml-auto flex items-center">
                     <Lightbulb className="h-5 w-5 text-yellow-400 mr-1" />
-                    <span className="text-yellow-400 text-sm font-medium">{dummy.tip}</span>
+                    <span className="text-yellow-400 text-sm font-medium">
+                      {dummy.tip}
+                    </span>
                   </div>
                 </div>
 
@@ -265,7 +292,9 @@ useEffect(() => {
                         <Lightbulb className="h-5 w-5 mr-2 text-yellow-400" />
                         {activeUnit.content.insight.title}
                       </h4>
-                      <p className="text-purple-100 mt-2">{activeUnit.content.insight.message}</p>
+                      <p className="text-purple-100 mt-2">
+                        {activeUnit.content.insight.message}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -310,14 +339,24 @@ useEffect(() => {
                 <div className="mt-3">
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-purple-200">This unit</span>
-                    <span className="text-white font-bold">{activeUnit.progress}%</span>
+                    <span className="text-white font-bold">
+                      {activeUnit.progress}%
+                    </span>
                   </div>
-                  <Progress value={activeUnit.progress} className="h-2 bg-purple-950" />
+                  <Progress
+                    value={activeUnit.progress}
+                    className="h-2 bg-purple-950"
+                  />
                   <div className="flex justify-between text-sm mt-3 mb-1">
                     <span className="text-purple-200">Overall course</span>
-                    <span className="text-white font-bold">{dummy.overallProgress}%</span>
+                    <span className="text-white font-bold">
+                      {dummy.overallProgress}%
+                    </span>
                   </div>
-                  <Progress value={dummy.overallProgress} className="h-2 bg-purple-950" />
+                  <Progress
+                    value={dummy.overallProgress}
+                    className="h-2 bg-purple-950"
+                  />
                 </div>
               </Card>
             </div>
@@ -325,7 +364,7 @@ useEffect(() => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default LearningPage
+export default LearningPage;

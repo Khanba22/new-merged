@@ -42,8 +42,12 @@ export default function QuizPage() {
   const [loading, setLoading] = useState(true);
 
   const generateQuiz = async () => {
-    const data = await askAgent("generate_topics")
+    const data = await askAgent({
+      template:"generate_quiz",
+      context:localStorage.getItem("todays")
+    })
     setLoading(false)
+    console.log(data,"QUIZ DATA")
     setQuestions(data)
   };
 
