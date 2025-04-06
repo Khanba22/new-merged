@@ -191,7 +191,7 @@ export default function GamesPage() {
   }
 
   const handleCorrectAnswer = () => {
-    setScore((prev) => prev + 10)
+    setScore((prev) => prev + 10) 
     setShowConfetti(true)
     setTimeout(() => setShowConfetti(false), 2000)
   }

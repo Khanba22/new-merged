@@ -160,14 +160,14 @@ export default function QuizPage() {
 
   if (completed && showReview) {
     return (
-      <div className="min-h-screen w-screen bg-purple-900 flex flex-col items-center justify-center px-4 py-10">
-        <div className="w-full max-w-6xl flex flex-col">
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex items-center gap-2">
+      <div className="min-h-screen w-[80vw] w-screen bg-purple-900 flex flex-col items-center justify-center px-4 py-10">
+        <div className="w-full w-[80vw] max-w-6xl flex flex-col">
+          <div className="flex w-[80vw] justify-between items-center mb-6">
+            <div className="flex w-[80vw] items-center gap-2">
               <BookOpen className="h-6 w-6 text-white" />
               <h1 className="text-2xl font-bold text-white">Tax Today</h1>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex w-[80vw] items-center gap-4">
               <div className="flex items-center gap-1">
                 <Zap className="h-5 w-5 text-yellow-400" />
                 <span className="text-yellow-400 font-medium">
